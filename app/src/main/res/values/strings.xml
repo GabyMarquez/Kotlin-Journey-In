@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Task Room</string>
+
+    <!-- List Fragment   -->
+    <string name="title_app">Task Room</string>
+    <string name="welcome_msg">Welcome, </string>
+    <string name="list_task_msg">Your list of task: </string>
+
+    <!--    Detail Fragment-->
+    <string name="txt_title">Title</string>
+    <string name="txt_description">Description</string>
+    <string name="txt_date">Date</string>
+
+    <string name="btn_insert">Save</string>
+    <string name="btn_addEvent">Add to calendar</string>
+
+    <string name="error_title">Enter title</string>
+    <string name="error_description">Enter description</string>
+    <string name="error_date">Enter date</string>
+
+    <string name="error_detail">Missing fields </string>
+</resources>

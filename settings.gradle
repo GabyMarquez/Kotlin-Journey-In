@@ -1,0 +1,2 @@
+rootProject.name='TaskRoom'
+include ':app'
