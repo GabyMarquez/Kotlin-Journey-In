@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/listTask">
+
+    <fragment
+        android:id="@+id/listTask"
+        android:name="com.gabmarquez.taskroom.view.list.ListTask"
+        android:label="ListTask" >
+        <action
+            android:id="@+id/action_listTask_to_detailAddTask"
+            app:destination="@id/detailAddTask" />
+        <action
+            android:id="@+id/action_listTask_to_detailEditTask"
+            app:destination="@id/detailEditTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailAddTask"
+        android:name="com.gabmarquez.taskroom.view.detail.DetailAddTask"
+        android:label="DetailAddTask" >
+        <action
+            android:id="@+id/action_detailAddTask_to_listTask"
+            app:destination="@id/listTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailEditTask"
+        android:name="com.gabmarquez.taskroom.view.detail.DetailEditTask"
+        android:label="DetailEditTask">
+<!--        <argument-->
+<!--            android:name="taskId"-->
+<!--            app:argType="Long" />-->
+        <action
+            android:id="@+id/action_detailEditTask_to_listTask"
+            app:destination="@id/listTask" />
+    </fragment>
+</navigation>
