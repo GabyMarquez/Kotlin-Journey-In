@@ -26,12 +26,9 @@
         android:id="@+id/detailEditTask"
         android:name="com.gabmarquez.taskroom.view.detail.DetailEditTask"
         android:label="DetailEditTask">
-<!--        <argument-->
-<!--            android:name="taskId"-->
-<!--            app:argType="Long" />-->
-<!--        <argument-->
-<!--            android:name="taskId"-->
-<!--            app:argType="Long" />-->
+        <argument
+            android:name="taskId"
+            app:argType="long" />
         <action
             android:id="@+id/action_detailEditTask_to_listTask"
             app:destination="@id/listTask" />

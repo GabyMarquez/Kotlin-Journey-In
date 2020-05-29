@@ -1,81 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/deltaRelative"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/title_task"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/deltaRelative"
+                android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_alignParentRight="false"
-                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/title_task"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="false"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/jockey_one"
+                    android:text="@string/title_app"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="40sp" />
+
+                <ImageButton
+                    android:id="@+id/add_task"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/ic_add" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/welcome_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/deltaRelative"
                 android:fontFamily="@font/jockey_one"
-                android:text="@string/title_app"
+                android:text="@string/welcome_msg"
                 android:textColor="@color/colorAccent"
-                android:textSize="40sp" />
+                android:textSize="22sp" />
 
-            <ImageButton
-                android:id="@+id/add_task"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerInParent="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="25dp"
-                android:background="@drawable/ic_add" />
+            <TextView
+                android:id="@+id/lits_task_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/welcome_msg"
+                android:fontFamily="@font/jockey_one"
+                android:text="@string/list_task_msg"
+                android:textColor="@color/colorAccent"
+                android:textSize="18sp" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_list_task"
+                android:layout_below="@id/lits_task_msg"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:listitem="@layout/item_task" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/welcome_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@id/deltaRelative"
-            android:fontFamily="@font/jockey_one"
-            android:text="@string/welcome_msg"
-            android:textColor="@color/colorAccent"
-            android:textSize="22sp" />
-
-        <TextView
-            android:id="@+id/lits_task_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@id/welcome_msg"
-            android:fontFamily="@font/jockey_one"
-            android:text="@string/list_task_msg"
-            android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview_list_task"
-            android:layout_below="@id/lits_task_msg"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/item_task"/>
-    </RelativeLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
