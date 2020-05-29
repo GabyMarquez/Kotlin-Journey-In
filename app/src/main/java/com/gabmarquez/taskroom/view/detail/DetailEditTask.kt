@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.gabmarquez.taskroom.R
 import com.gabmarquez.taskroom.databinding.FragmentDetailTaskBinding
 import com.gabmarquez.taskroom.repository.local.Task
@@ -54,12 +55,12 @@ class DetailEditTask : DaggerFragment() {
             pickerCalendar()
         }
 
-        binding.btnInsert.setOnClickListener {
-            event()
+        binding.btnBack.setOnClickListener {
+            popStack()
         }
 
-        binding.btnBack.setOnClickListener {
-            Navigation.findNavController(requireActivity(),R.id.container).popBackStack()
+        binding.btnInsert.setOnClickListener {
+            event()
         }
 
         if (task != null) btn_insert.visibility = View.VISIBLE
@@ -79,6 +80,7 @@ class DetailEditTask : DaggerFragment() {
 
             val task = Task(idTask = idTask, title = title, description = description, date = date)
             taskViewModel.insertTask(task)
+            popStack()
         }
     }
 
@@ -127,6 +129,10 @@ class DetailEditTask : DaggerFragment() {
         pickerDialog.show()
     }
 
+    fun popStack() {
+        val navDirection = DetailEditTaskDirections.actionDetailEditTaskToListTask()
+        findNavController().navigate(navDirection)
+    }
 
     private fun event() {
         if (validateTask(0)) {

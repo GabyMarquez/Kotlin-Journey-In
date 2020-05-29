@@ -25,6 +25,7 @@ class TaskListAdapter () : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
 //        }
 
         private lateinit var taskEventClick: TaskEventClick
+//        val task: Task
 
         init {
             itemTaskBinding.root.setOnClickListener(this)
@@ -36,7 +37,7 @@ class TaskListAdapter () : RecyclerView.Adapter<TaskListAdapter.ViewHolder>() {
 
         override fun onClick(v: View?) {
             if (v != null) {
-                taskEventClick.onTaskClick(v, adapterPosition, false)
+                taskEventClick.onTaskClick(v, adapterPosition)
             }
         }
     }

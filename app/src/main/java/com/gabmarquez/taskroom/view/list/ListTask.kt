@@ -71,34 +71,12 @@ class ListTask : DaggerFragment(), TaskEventClick {
         })
     }
 
-    override fun onTaskClick(view: View, position: Int, isLongClick: Boolean) {
-        Log.e("onTaskClick", "Position: $position")
+    override fun onTaskClick(view: View, position: Int) {
+        Log.d("onTaskClick", "Position: $position")
         Toast.makeText(requireContext(), "You will be able to update here", Toast.LENGTH_SHORT).show()
-//        findNavController().navigate(ListTaskDirections.actionListTaskToDetailEditTask(t))
+        findNavController().navigate(ListTaskDirections.actionListTaskToDetailEditTask())
 //        findNavController().navigate(
 //            SeriesListFragmentDirections.actionSeriesListFragmentToMangaDetailFragment(manga.id)
 //        )
     }
-
-
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (resultCode == Activity.RESULT_OK) {
-//            val task = data.<Task>(Handle.INTENT_OBJECT)!!
-//            when (requestCode) {
-//                Handle.INTENT_CREATE -> {
-//                    taskViewModel.insertTask(task)
-//                }
-//                Handle.INTENT_UPDATE -> {
-//                    taskViewModel.updateTask(task)
-//                }
-//            }
-//        }
-//    }
-
-//    override fun onView(task: Task) {
-//        val intent = Intent(getActivity(), DetailTask::class.java)
-//        intent.putExtra(Handle.INTENT_OBJECT, task)
-//        startActivityForResult(intent, Handle.INTENT_UPDATE)
-//    }
 }
