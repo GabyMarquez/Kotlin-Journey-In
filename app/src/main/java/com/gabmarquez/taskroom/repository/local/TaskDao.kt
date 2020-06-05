@@ -17,4 +17,7 @@ interface TaskDao {
 
     @Delete
     suspend fun deleteAll(task: Task)
+
+    @Query("SELECT * FROM task_room_db WHERE idTask = :taskId")
+    fun getTaskWithId(taskId: Long) : LiveData<Task>
 }

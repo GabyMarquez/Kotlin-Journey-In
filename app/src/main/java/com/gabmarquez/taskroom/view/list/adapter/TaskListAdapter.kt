@@ -1,4 +1,4 @@
-package com.gabmarquez.taskroom.view.list.Adapter
+package com.gabmarquez.taskroom.view.list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,7 @@ class TaskListAdapter (val clickListener : TaskListListener) : ListAdapter<Task,
     class ViewHolder private constructor(val itemTaskBinding: ItemTaskBinding) : RecyclerView.ViewHolder(itemTaskBinding.root) {
         fun bind(clickListener: TaskListListener, task: Task) {
             itemTaskBinding.task = task
-//            itemTaskBinding.clickListener = clickListener
+            itemTaskBinding.clickListener = clickListener
             itemTaskBinding.executePendingBindings()
         }
 
@@ -35,7 +35,7 @@ class TaskListAdapter (val clickListener : TaskListListener) : ListAdapter<Task,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val taskPosition = getItem(position)
 //        holder.bind(taskPosition)
-        holder.bind(clickListener, taskPosition!!)
+        holder.bind(clickListener, taskPosition)
     }
 }
 

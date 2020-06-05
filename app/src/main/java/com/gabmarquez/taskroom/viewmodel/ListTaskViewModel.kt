@@ -1,28 +1,33 @@
 package com.gabmarquez.taskroom.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.gabmarquez.taskroom.repository.TaskRepositoryModule
+import com.gabmarquez.taskroom.repository.TaskRepository
 import com.gabmarquez.taskroom.repository.local.Task
 import javax.inject.Inject
 
-class ListTaskViewModel @Inject constructor (val taskRepositoryModule: TaskRepositoryModule) : ViewModel() {
+class ListTaskViewModel @Inject constructor (val taskRepository: TaskRepository, application: Application) : AndroidViewModel(application) {
 
-    val list = getListTask()
-    val navigateToEditTask : LiveData<Task> get() = _navigateToEditTask
+    val list = taskRepository.getListTask()
+    val navigateToEditTask  get() = _navigateToEditTask
 
     fun getListTask(): LiveData<List<Task>> {
-        return taskRepositoryModule.getListTask()
+        return taskRepository.getListTask()
     }
 
     fun insertTask(task: Task) {
-        taskRepositoryModule.insertTask(task)
+        taskRepository.insertTask(task)
     }
 
     fun updateTask(task: Task) {
-        taskRepositoryModule.updateTask(task)
+        taskRepository.updateTask(task)
     }
 
-    private val _navigateToEditTask = MutableLiveData<Task>()
+    private val _navigateToEditTask = MutableLiveData<Long>()
+
+    fun onTaskClicked(taskId: Long?) {
+        _navigateToEditTask.value = taskId
+    }
 }

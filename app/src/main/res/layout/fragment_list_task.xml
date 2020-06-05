@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewmodel"
+            type="com.gabmarquez.taskroom.viewmodel.ListTaskViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

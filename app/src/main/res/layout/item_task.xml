@@ -8,9 +8,9 @@
             name="task"
             type="com.gabmarquez.taskroom.repository.local.Task"/>
 
-<!--        <variable-->
-<!--            name="clickListener"-->
-<!--            type="com.gabmarquez.taskroom.view.list.Adapter.TaskListListener"/>-->
+        <variable
+            name="clickListener"
+            type="com.gabmarquez.taskroom.view.list.adapter.TaskListListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -18,9 +18,8 @@
         android:layout_height="wrap_content"
         card:cardCornerRadius="5dp"
         card:cardElevation="5dp"
-        card:cardUseCompatPadding="true">
-
-<!--        android:onClick="@{() -> clickListener.onClick(task)}">-->
+        card:cardUseCompatPadding="true"
+        android:onClick="@{() -> clickListener.onClick(task)}">
 
         <View
             android:layout_width="match_parent"
@@ -71,4 +70,5 @@
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
+
 </layout>

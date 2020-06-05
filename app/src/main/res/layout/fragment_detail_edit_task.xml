@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="detailEditTaskViewModel"
+            type="com.gabmarquez.taskroom.viewmodel.DetailEditTaskViewModel"/>
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/ic_back" />
+
+            <ImageButton
+                android:id="@+id/btn_save"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_check_save" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_marginTop="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/field_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                app:hintTextAppearance="@style/HintEditText">
+
+                <EditText
+                    android:id="@+id/edt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:hint="@string/txt_title"
+                    android:singleLine="true"
+                    android:textStyle="bold" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/field_description"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:layout_height="wrap_content"
+                app:hintTextAppearance="@style/HintEditText">
+
+                <EditText
+                    android:id="@+id/edt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:hint="@string/txt_description"
+                    android:inputType="textMultiLine|textFilter" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/field_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="35dp"
+                    android:clickable="false"
+                    app:hintTextAppearance="@style/HintEditText">
+
+                    <EditText
+                        android:id="@+id/edt_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="35dp"
+                        android:gravity="top"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:hint="@string/txt_date"
+                        android:inputType="textMultiLine|textFilter" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <ImageButton
+                    android:id="@+id/btn_calendar"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/ic_calendar" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_insert"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorPrimaryDark"
+                android:textColor="@color/white"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/btn_addEvent" />
+
+        </LinearLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

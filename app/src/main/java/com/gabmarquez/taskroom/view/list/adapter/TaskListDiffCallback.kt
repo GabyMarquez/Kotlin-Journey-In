@@ -1,4 +1,4 @@
-package com.gabmarquez.taskroom.view.list.Adapter
+package com.gabmarquez.taskroom.view.list.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.gabmarquez.taskroom.repository.local.Task

@@ -9,12 +9,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.gabmarquez.taskroom.databinding.FragmentListTaskBinding
-import com.gabmarquez.taskroom.view.list.Adapter.TaskListAdapter
-import com.gabmarquez.taskroom.view.list.Adapter.TaskListListener
+import com.gabmarquez.taskroom.view.list.adapter.TaskListAdapter
+import com.gabmarquez.taskroom.view.list.adapter.TaskListListener
 import com.gabmarquez.taskroom.viewmodel.ListTaskViewModel
 import com.gabmarquez.taskroom.viewmodel.ListTaskViewModelFactory
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_list_task.*
 import javax.inject.Inject
 
 class ListTask : DaggerFragment() {
@@ -45,23 +44,32 @@ class ListTask : DaggerFragment() {
     }
 
     private fun setUpRecyclerView() {
-        taskListAdapter = TaskListAdapter(TaskListListener {
-            Toast.makeText(context, "${it}", Toast.LENGTH_LONG).show()
+       taskListAdapter = TaskListAdapter(TaskListListener { taskId ->
+           taskViewModel.onTaskClicked(taskId)
+           Toast.makeText(context, "$taskId", Toast.LENGTH_LONG).show()
+           goingToAddTask()
         })
 
         binding.recyclerviewListTask.adapter = taskListAdapter
     }
 
     private fun populateRecyclerView() {
-        taskViewModel.list.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                taskListAdapter.submitList(it)
+        taskViewModel.list.observe(viewLifecycleOwner, Observer { taskList ->
+            taskList?.let { taskList ->
+                taskListAdapter.submitList(taskList)
             }
         })
     }
 
     private fun insertTask() {
-        val navDirection = ListTaskDirections.actionListTaskToDetailAddTask()
-        findNavController().navigate(navDirection)
+        this.findNavController().navigate(ListTaskDirections.actionListTaskToDetailAddTask())
+    }
+
+    private fun goingToAddTask() {
+        taskViewModel.navigateToEditTask.observe(viewLifecycleOwner, Observer { taskId ->
+            taskId?.let {
+                this.findNavController().navigate(ListTaskDirections.actionListTaskToDetailEditTask(taskId))
+            }
+        })
     }
 }

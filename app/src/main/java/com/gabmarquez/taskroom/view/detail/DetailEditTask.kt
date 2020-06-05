@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.gabmarquez.taskroom.R
-import com.gabmarquez.taskroom.databinding.FragmentDetailTaskBinding
+import com.gabmarquez.taskroom.databinding.FragmentDetailEditTaskBinding
 import com.gabmarquez.taskroom.repository.local.Task
 import com.gabmarquez.taskroom.viewmodel.ListTaskViewModel
 import com.gabmarquez.taskroom.viewmodel.ListTaskViewModelFactory
@@ -28,17 +29,26 @@ import javax.inject.Inject
 class DetailEditTask : DaggerFragment() {
 
     var task: Task? = null
-    private lateinit var binding: FragmentDetailTaskBinding
+    private lateinit var binding : FragmentDetailEditTaskBinding
 
     private lateinit var taskViewModel : ListTaskViewModel
     @Inject
     lateinit var listTaskViewModelFactory : ListTaskViewModelFactory
+//    lateinit var args: DetailEditTaskArgs
+    private var taskId : Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_task, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_edit_task, container, false)
+        val args = arguments?.let {
+            DetailEditTaskArgs.fromBundle(it)
+        }
+
+        taskId = args!!.taskId
+        Log.i("taskId", taskId.toString())
+
         return binding.root
     }
 
@@ -62,6 +72,8 @@ class DetailEditTask : DaggerFragment() {
         binding.btnInsert.setOnClickListener {
             event()
         }
+
+//        args = DetailEditTaskArgs.fromBundle(requireArguments())
 
         if (task != null) btn_insert.visibility = View.VISIBLE
     }
