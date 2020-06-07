@@ -1,28 +1,24 @@
 package com.gabmarquez.taskroom.view.detail
 
+import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.provider.CalendarContract
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.IdRes
-import androidx.annotation.Nullable
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.gabmarquez.taskroom.R
-import com.gabmarquez.taskroom.databinding.FragmentDetailTaskBinding
+import com.gabmarquez.taskroom.databinding.FragmentAddTaskBinding
 import com.gabmarquez.taskroom.repository.local.Task
-import com.gabmarquez.taskroom.viewmodel.ListTaskViewModel
-import com.gabmarquez.taskroom.viewmodel.ListTaskViewModelFactory
+import com.gabmarquez.taskroom.utilities.EventObserver
+import com.gabmarquez.taskroom.utilities.setupSnackbar
+import com.gabmarquez.taskroom.viewmodel.DetailTaskViewModel
+import com.gabmarquez.taskroom.viewmodel.TaskViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_detail_task.*
+import kotlinx.android.synthetic.main.fragment_add_task.*
 import java.util.*
 import javax.inject.Inject
 
@@ -30,59 +26,59 @@ import javax.inject.Inject
 class DetailAddTask : DaggerFragment() {
 
     var task: Task? = null
-    private lateinit var binding: FragmentDetailTaskBinding
 
-    private lateinit var taskViewModel : ListTaskViewModel
+    private lateinit var binding: FragmentAddTaskBinding
+
+    private lateinit var taskViewModel: DetailTaskViewModel
+
     @Inject
-    lateinit var listTaskViewModelFactory : ListTaskViewModelFactory
+    lateinit var taskViewModelFactory: TaskViewModelFactory
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail_task, container, false)
+        val root = inflater.inflate(R.layout.fragment_add_task, container, false)
+        setupViewModel()
+        binding = FragmentAddTaskBinding.bind(root).apply {
+            this.detailViewModel = taskViewModel
+        }
+        binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.handlers = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViewModel()
-
-        binding.btnSave.setOnClickListener {
-            saveTask()
-        }
-
-        binding.btnCalendar.setOnClickListener {
-            pickerCalendar()
-        }
-
-        binding.btnBack.setOnClickListener {
-            popStack()
-        }
-
-        if (task != null) btn_insert.visibility = View.VISIBLE
+        taskViewModel.navigateToListTask.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            if (it == true) {
+                val navDirection = DetailAddTaskDirections.actionDetailAddTaskToListTask()
+                findNavController().navigate(navDirection)
+                taskViewModel.doneNavigating()
+            }
+        })
     }
 
     private fun setupViewModel() {
-        taskViewModel = ViewModelProvider(this, listTaskViewModelFactory).get(ListTaskViewModel::class.java)
+        taskViewModel =
+            ViewModelProvider(this, taskViewModelFactory).get(DetailTaskViewModel::class.java)
     }
 
-    private fun saveTask() {
-        if (validateTask(1)) {
+    fun saveTask() {
+        if (validateTask()) {
             var title = binding.edtTitle.text.toString()
             var description = binding.edtDescription.text.toString()
             var date = binding.edtDate.text.toString()
 
             val idTask = if (task != null) task?.idTask else null
 
-            val task = Task(idTask = idTask, title = title, description = description, date = date)
+            val task = Task(idTask, title, description, date)
             taskViewModel.insertTask(task)
-            popStack()
         }
     }
 
-    private fun validateTask(option: Int): Boolean {
+    private fun validateTask(): Boolean {
         if (binding.edtTitle.text.isEmpty()) {
             binding.edtTitle.requestFocus()
             snack(getString(R.string.error_title))
@@ -93,12 +89,10 @@ class DetailAddTask : DaggerFragment() {
             snack(getString(R.string.error_description))
             return false
         }
-        if (option == 1) {
-            if (binding.edtDate.text.isEmpty()) {
-                binding.edtDate.requestFocus()
-                snack(getString(R.string.error_date))
-                return false
-            }
+        if (binding.edtDate.text.isEmpty()) {
+            binding.edtDate.requestFocus()
+            snack(getString(R.string.error_date))
+            return false
         }
 
         return true
@@ -107,28 +101,27 @@ class DetailAddTask : DaggerFragment() {
     private fun snack(message: String) {
         val snackbar = Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG)
         val snackbarView = snackbar.view
-        snackbarView.setBackgroundColor(Color.parseColor("#969CFF"))
+        snackbarView.setBackgroundColor(resources.getColor(R.color.colorPrimaryDark))
         snackbar.show()
     }
 
-    private fun pickerCalendar() {
+    fun pickerCalendar() {
 
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val pickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-
-            edt_date.setText("" + dayOfMonth + "/" + month + "/" + year)
-
-        }, year, month, day)
+        val pickerDialog = DatePickerDialog(
+            requireContext(),
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                binding.edtDate.setText("" + dayOfMonth + "/" + month + "/" + year)
+            },
+            year,
+            month,
+            day
+        )
 
         pickerDialog.show()
-    }
-
-    fun popStack() {
-        val navDirection = DetailAddTaskDirections.actionDetailAddTaskToListTask()
-        findNavController().navigate(navDirection)
     }
 }

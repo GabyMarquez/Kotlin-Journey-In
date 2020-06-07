@@ -1,7 +1,7 @@
 package com.gabmarquez.taskroom.di.component
 
 import android.app.Application
-import com.gabmarquez.taskroom.TaskApplication
+import com.gabmarquez.taskroom.base.TaskApplication
 import com.gabmarquez.taskroom.di.module.ActivityBuildersModule
 import com.gabmarquez.taskroom.di.module.AppModule
 import dagger.BindsInstance

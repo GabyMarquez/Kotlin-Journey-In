@@ -14,9 +14,9 @@
     <string name="btn_insert">Save</string>
     <string name="btn_addEvent">Add to calendar</string>
 
-    <string name="error_title">Enter title</string>
-    <string name="error_description">Enter description</string>
-    <string name="error_date">Enter date</string>
+    <string name="error_title">Enter a title</string>
+    <string name="error_description">Enter a description</string>
+    <string name="error_date">Select a date</string>
 
     <string name="error_detail">Missing fields </string>
 </resources>

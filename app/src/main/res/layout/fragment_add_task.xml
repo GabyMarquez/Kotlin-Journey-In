@@ -4,8 +4,11 @@
 
     <data>
         <variable
-            name="detailEditTaskViewModel"
-            type="com.gabmarquez.taskroom.viewmodel.DetailEditTaskViewModel"/>
+            name="detailViewModel"
+            type="com.gabmarquez.taskroom.viewmodel.DetailTaskViewModel"/>
+
+        <variable name="handlers"
+            type="com.gabmarquez.taskroom.view.detail.DetailAddTask"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -22,7 +25,8 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/ic_back" />
+                android:background="@drawable/ic_back"
+                android:onClick="@{() -> detailViewModel.backToListTask()}"/>
 
             <ImageButton
                 android:id="@+id/btn_save"
@@ -31,6 +35,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="25dp"
                 android:layout_marginRight="20dp"
+                android:onClick="@{() -> handlers.saveTask()}"
                 android:background="@drawable/ic_check_save" />
 
         </RelativeLayout>
@@ -58,6 +63,7 @@
                     android:gravity="start"
                     android:hint="@string/txt_title"
                     android:singleLine="true"
+                    android:colorControlActivated="@color/colorPrimaryDark"
                     android:textStyle="bold" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -75,6 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
+                    android:colorControlActivated="@color/colorPrimaryDark"
                     android:hint="@string/txt_description"
                     android:inputType="textMultiLine|textFilter" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -100,6 +107,7 @@
                         android:clickable="false"
                         android:enabled="false"
                         android:hint="@string/txt_date"
+                        android:colorControlActivated="@color/colorPrimaryDark"
                         android:inputType="textMultiLine|textFilter" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,21 +117,12 @@
                     android:layout_height="35dp"
                     android:layout_marginTop="10dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/ic_calendar" />
+                    android:background="@drawable/ic_calendar"
+                    android:onClick="@{() -> handlers.pickerCalendar()}"/>
             </RelativeLayout>
-
-            <Button
-                android:id="@+id/btn_insert"
-                android:layout_marginTop="20dp"
-                android:background="@color/colorPrimaryDark"
-                android:textColor="@color/white"
-                android:fontFamily="@font/roboto_bold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="@string/btn_addEvent" />
 
         </LinearLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
+

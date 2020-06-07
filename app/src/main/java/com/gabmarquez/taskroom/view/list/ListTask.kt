@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -12,19 +11,24 @@ import com.gabmarquez.taskroom.databinding.FragmentListTaskBinding
 import com.gabmarquez.taskroom.view.list.adapter.TaskListAdapter
 import com.gabmarquez.taskroom.view.list.adapter.TaskListListener
 import com.gabmarquez.taskroom.viewmodel.ListTaskViewModel
-import com.gabmarquez.taskroom.viewmodel.ListTaskViewModelFactory
+import com.gabmarquez.taskroom.viewmodel.TaskViewModelFactory
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
 class ListTask : DaggerFragment() {
 
-    private lateinit var taskListAdapter : TaskListAdapter
-    private lateinit var taskViewModel : ListTaskViewModel
+    private lateinit var taskListAdapter: TaskListAdapter
+    private lateinit var taskViewModel: ListTaskViewModel
+
     @Inject
-    lateinit var listTaskViewModelFactory : ListTaskViewModelFactory
+    lateinit var taskViewModelFactory: TaskViewModelFactory
     private lateinit var binding: FragmentListTaskBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = FragmentListTaskBinding.inflate(inflater)
 
@@ -40,14 +44,14 @@ class ListTask : DaggerFragment() {
     }
 
     private fun setViewModel() {
-        taskViewModel = ViewModelProvider(this, listTaskViewModelFactory).get(ListTaskViewModel::class.java)
+        taskViewModel =
+            ViewModelProvider(this, taskViewModelFactory).get(ListTaskViewModel::class.java)
     }
 
     private fun setUpRecyclerView() {
-       taskListAdapter = TaskListAdapter(TaskListListener { taskId ->
-           taskViewModel.onTaskClicked(taskId)
-           Toast.makeText(context, "$taskId", Toast.LENGTH_LONG).show()
-           goingToAddTask()
+        taskListAdapter = TaskListAdapter(TaskListListener { task ->
+            taskViewModel.onTaskClicked(task)
+            goingToAddTask()
         })
 
         binding.recyclerviewListTask.adapter = taskListAdapter
@@ -66,9 +70,10 @@ class ListTask : DaggerFragment() {
     }
 
     private fun goingToAddTask() {
-        taskViewModel.navigateToEditTask.observe(viewLifecycleOwner, Observer { taskId ->
-            taskId?.let {
-                this.findNavController().navigate(ListTaskDirections.actionListTaskToDetailEditTask(taskId))
+        taskViewModel.navigateToEditTask.observe(viewLifecycleOwner, Observer { task ->
+            task?.let {
+                this.findNavController()
+                    .navigate(ListTaskDirections.actionListTaskToDetailEditTask(task))
             }
         })
     }

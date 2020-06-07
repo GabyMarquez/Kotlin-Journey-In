@@ -4,8 +4,15 @@
 
     <data>
         <variable
-            name="listener"
-            type="com.gabmarquez.taskroom.view.detail.DetailAddTask"/>
+            name="task"
+            type="com.gabmarquez.taskroom.repository.local.Task"/>
+
+        <variable
+            name="detailViewModel"
+            type="com.gabmarquez.taskroom.viewmodel.DetailTaskViewModel"/>
+
+        <variable name="handlers"
+            type="com.gabmarquez.taskroom.view.detail.DetailEditTask"/>
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -22,16 +29,8 @@
                 android:layout_height="20dp"
                 android:layout_marginTop="25dp"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/ic_back" />
-
-            <ImageButton
-                android:id="@+id/btn_save"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="25dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/ic_check_save" />
+                android:background="@drawable/ic_back"
+                android:onClick="@{() -> detailViewModel.backToListTask()}"/>
 
         </RelativeLayout>
 
@@ -52,12 +51,15 @@
                 app:hintTextAppearance="@style/HintEditText">
 
                 <EditText
-                    android:id="@+id/edt_title"
+                    android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:hint="@string/txt_title"
                     android:singleLine="true"
+                    android:text="@{task.title}"
+                    android:clickable="false"
+                    android:enabled="false"
                     android:textStyle="bold" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -71,11 +73,14 @@
                 app:hintTextAppearance="@style/HintEditText">
 
                 <EditText
-                    android:id="@+id/edt_description"
+                    android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
                     android:hint="@string/txt_description"
+                    android:text="@{task.description}"
+                    android:clickable="false"
+                    android:enabled="false"
                     android:inputType="textMultiLine|textFilter" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +97,7 @@
                     app:hintTextAppearance="@style/HintEditText">
 
                     <EditText
-                        android:id="@+id/edt_date"
+                        android:id="@+id/date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="35dp"
@@ -100,6 +105,7 @@
                         android:clickable="false"
                         android:enabled="false"
                         android:hint="@string/txt_date"
+                        android:text="@{task.date}"
                         android:inputType="textMultiLine|textFilter" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -120,8 +126,8 @@
                 android:fontFamily="@font/roboto_bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="@string/btn_addEvent" />
+                android:text="@string/btn_addEvent"
+                android:onClick="@{() -> handlers.createEvent(title.getText().toString(), description.getText().toString())}"/>
 
         </LinearLayout>
 

@@ -14,8 +14,8 @@ class AppModule {
 
     @Singleton
     @Provides
-    fun providesAppDatabase(application: Application) : TaskDatabase {
-        return Room.databaseBuilder(application, TaskDatabase::class.java,"task_room_db").build()
+    fun providesAppDatabase(application: Application): TaskDatabase {
+        return Room.databaseBuilder(application, TaskDatabase::class.java, "task_room_db").build()
     }
 
     @Singleton
@@ -25,7 +25,7 @@ class AppModule {
     }
 
     @Provides
-    fun providesRepository(taskDao: TaskDao) : TaskRepository {
+    fun providesRepository(taskDao: TaskDao): TaskRepository {
         return TaskRepository(taskDao)
     }
 }

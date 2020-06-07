@@ -6,11 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="android:textColorHint">@color/colorPrimaryDark</item>
-        <item name="colorControlNormal">@color/hints</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="colorControlHighlight">@color/hints</item>
     </style>
 
     <style name="HintEditText" parent="TextAppearance.Design.Hint">
